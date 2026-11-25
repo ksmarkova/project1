@@ -1,0 +1,19 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile C++ to EXE
+        run: g++ *.cpp -o shop.exe -static-libgcc -static-libstdc++
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: shop-windows
+          path: shop.exe
